@@ -14,4 +14,4 @@
 + [（五）loading](https://93qlin.github.io/webSpecialEffect/loading.html)[5]
 + [（六）滚动条（复制别人之作）](https://93qlin.github.io/webSpecialEffect/scoll.html)[6]
 + [（七）悬浮提示](https://93qlin.github.io/webSpecialEffect/skill.html)[7]
-[7]:https://github.com/93Qlin/webSpecialEffect.git "源代码下载"
+[8]:https://github.com/93Qlin/webSpecialEffect.git "源代码下载"
