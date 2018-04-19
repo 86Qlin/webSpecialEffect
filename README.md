@@ -7,7 +7,7 @@
 </p>
 
 ###### 项目预览：
-+ [更新日志demo](https://93qlin.github.io/webSpecialEffect/)[1]
++ [（一）更新日志demo](https://93qlin.github.io/webSpecialEffect/)[1]
 + [（二）轮播](https://93qlin.github.io/webSpecialEffect/bananer.html)[2]
 + [（三）几何图形](https://93qlin.github.io/webSpecialEffect/geometricFigure.html)[3]
 + [（四）图片懒加载](https://93qlin.github.io/webSpecialEffect/imglazy throttle.html)[4]
