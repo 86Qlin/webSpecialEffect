@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>适合于后台使用的动画折叠菜单</title>
+    <script type="text/javascript">
+    function FOLDMenu(id, onlyone) {
+        if (!document.getElementById || !document.getElementsByTagName) { return false; }
+        this.menu = document.getElementById(id);
+        this.submenu = this.menu.getElementsByTagName("ul");
+        this.speed = 3;
+        this.time = 10;
+        this.onlyone = onlyone == true ? onlyone : false;
+        this.links = this.menu.getElementsByTagName("a");
+    }
+    FOLDMenu.prototype.init = function() {
+        var mainInstance = this;
+        for (var i = 0; i < this.submenu.length; i++) {
+            this.submenu[i].getElementsByTagName("span")[0].onclick = function() {
+                mainInstance.toogleMenu(this.parentNode);
+            };
+        }
+        for (var i = 0; i < this.links.length; i++) {
+            this.links[i].onclick = function() {
+                this.className = "current";
+                mainInstance.removeCurrent(this);
+            }
+        }
+    }
+    FOLDMenu.prototype.removeCurrent = function(link) {
+        for (var i = 0; i < this.links.length; i++) {
+            if (this.links[i] != link) {
+                this.links[i].className = " ";
+            }
+        }
+    }
+    FOLDMenu.prototype.toogleMenu = function(submenu) {
+        if (submenu.className == "open") {
+            this.closeMenu(submenu);
+        } else {
+            this.openMenu(submenu);
+        }
+    }
+    FOLDMenu.prototype.openMenu = function(submenu) {
+        var fullHeight = submenu.getElementsByTagName("span")[0].offsetHeight;
+        var links = submenu.getElementsByTagName("a");
+        for (var i = 0; i < links.length; i++) {
+            fullHeight += links[i].offsetHeight;
+        }
+        var moveBy = Math.round(this.speed * links.length);
+        var mainInstance = this;
+        var intId = setInterval(function() {
+            var curHeight = submenu.offsetHeight;
+            var newHeight = curHeight + moveBy;
+            if (newHeight < fullHeight) {
+                submenu.style.height = newHeight + "px";
+            } else {
+                clearInterval(intId);
+                submenu.style.height = "";
+                submenu.className = "open";
+            }
+        }, this.time);
+        this.collapseOthers(submenu);
+    }
+    FOLDMenu.prototype.closeMenu = function(submenu) {
+        var minHeight = submenu.getElementsByTagName("span")[0].offsetHeight;
+        var moveBy = Math.round(this.speed * submenu.getElementsByTagName("a").length);
+        var mainInstance = this;
+        var intId = setInterval(function() {
+            var curHeight = submenu.offsetHeight;
+            var newHeight = curHeight - moveBy;
+            if (newHeight > minHeight) {
+                submenu.style.height = newHeight + "px";
+            } else {
+                clearInterval(intId);
+                submenu.style.height = "";
+                submenu.className = "";
+            }
+        }, this.time);
+    }
+    FOLDMenu.prototype.collapseOthers = function(submenu) {
+        if (this.onlyone) {
+            for (var i = 0; i < this.submenu.length; i++) {
+                if (this.submenu[i] != submenu) {
+                    this.closeMenu(this.submenu[i]);
+                }
+            }
+        }
+    }
+    </script>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .foldmenu {
+        border: 1px solid #000;
+        width: 150px;
+        margin: 50px;
+    }
+
+    .foldmenu ul {
+        list-style-type: none;
+        height: 25px;
+        line-height: 25px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .foldmenu ul.open {
+        height: auto;
+    }
+
+    .foldmenu ul span {
+        display: block;
+        padding-left: 5px
+    }
+
+    .foldmenu ul li {
+        border-bottom: 1px solid #DDDDDD;
+    }
+
+    .foldmenu li a {
+        background-color: #EEEEEE;
+        color: #006666;
+        display: block;
+        padding: 5px 10px;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .foldmenu li a:hover {
+        background-color: #006666;
+        color: #ffffff;
+    }
+
+    .foldmenu li a.current {
+        background-color: #006666;
+        color: #ffffff;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="foldmenu" class="foldmenu" style="float:left;">
+        <ul class="open">
+            <span>编程天地</span>
+            <li><a href="#">电子书籍</a></li>
+            <li><a href="#">源码乐园</a></li>
+        </ul>
+        <ul>
+            <span>中国门户</span>
+            <li><a href="#">百度搜索</a></li>
+            <li><a href="#">新浪新闻</a></li>
+            <li><a href="#">腾讯QQ</a></li>
+        </ul>
+        <ul>
+            <span>音乐网站</span>
+            <li><a href="#">百度音乐</a></li>
+            <li><a href="#">QQ163</a></li>
+        </ul>
+    </div>
+    <div id="foldmenu2" class="foldmenu" style="float:right;">
+        <ul class="open">
+            <span>世界大学</span>
+            <li><a href="#">剑桥</a></li>
+            <li><a href="#">牛津</a></li>
+            <li><a href="#">哈佛</a></li>
+            <li><a href="#">麻省理工</a></li>
+        </ul>
+        <ul>
+            <span>中国大学</span>
+            <li><a href="#">北大</a></li>
+            <li><a href="#">清华</a></li>
+            <li><a href="#">港大</a></li>
+        </ul>
+        <ul>
+            <span>世界好车</span>
+            <li><a href="#">宝马</a></li>
+            <li><a href="#">奔驰</a></li>
+            <li><a href="#">奥迪</a></li>
+        </ul>
+        <ul>
+            <span>开源论坛</span>
+            <li><a href="#">PhpWind</a></li>
+            <li><a href="#">Discuz!</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    window.onload = function() {
+        myMenu = new FOLDMenu("foldmenu", true);
+        myMenu.init();
+        myMenu2 = new FOLDMenu("foldmenu2");
+        myMenu2.init();
+    };
+    </script>
+</body>
+
+</html>

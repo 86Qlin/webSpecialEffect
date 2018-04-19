@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CSS+JS实现一个DIV层的展开/折叠效果丨芯晴网页特效丨CsrCode.Cn</title>
+<style>
+* { margin:0; padding:0;}
+body { text-align:center; font:75% Verdana, Arial, Helvetica, sans-serif;}
+h1 { font:125% Arial, Helvetica, sans-serif; text-align:left; font-weight:bolder; background:#555;  padding:3px; display:block; color:#99CC00}
+.class1 { width:40%; background:#CCCCCC; position:relative; margin:0 auto; padding:5px;}
+span { position:absolute; right:10px; top:8px; cursor:pointer; color:yellow;}
+p { text-align:left; line-height:20px; background:#555; padding:3px; margin-top:5px; color:#99CC00}
+#class1content { height:256px;overflow:hidden}
+</style>
+<script>
+function $(element){
+return element = document.getElementById(element);
+}
+function $D(){
+var d=$('class1content');
+var h=d.offsetHeight;
+var maxh=300;
+function dmove(){
+h+=50; //层展开速度
+if(h>=maxh){
+d.style.height='300px';
+clearInterval(iIntervalId);
+}else{
+d.style.display='block';
+d.style.height=h+'px';
+}
+}
+iIntervalId=setInterval(dmove,2);
+}
+function $D2(){
+var d=$('class1content');
+var h=d.offsetHeight;
+var maxh=300;
+function dmove(){
+h-=50;//层收缩速度
+if(h<=0){
+d.style.display='none';
+clearInterval(iIntervalId);
+}else{
+d.style.height=h+'px';
+}
+}
+iIntervalId=setInterval(dmove,2);
+}
+function $use(){
+var d=$('class1content');
+var sb=$('stateBut');
+if(d.style.display=='none'){
+$D();
+sb.innerHTML='收缩';
+}else{
+$D2();
+sb.innerHTML='展开';
+}
+}
+</script>
+</head>
+<body>
+<div class="class1">
+<h1>展开/折叠效果 - 芯晴网页特效</h1>
+<span id="stateBut" onclick="$use()">收缩</span>
+<p id="class1content">当然你也可以把下面一段代码去掉，只留这一行。
+<p align="center">本特效由 <a href="http://www.CsrCode.cn">芯晴网页特效</a>丨CsrCode.Cn 收集于互联网，只为兴趣与学习交流，不作商业用途。</p>
+</p>
+</div>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="icon/iconfont.css">
+  <style>
+  * { 
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+  }
+  body { 
+    font:75% Verdana, Arial, Helvetica, sans-serif;
+    /* 去掉点击时有蓝色背景 */
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
+  }
+  #collapse div{
+    width: 502px;
+    border: 1px solid #ccc;
+    margin: 0 auto; 
+    margin-bottom: 20px;
+  }
+   #collapse div span{
+    float: right
+   }
+   #collapse div h5{
+    height: 40px;
+    cursor: pointer;
+    padding: 0 20px;
+    line-height: 40px;
+    background: #999;
+   }
+   #collapse div p{
+    height: auto;
+    overflow: hidden;
+    line-height: 20px;
+    padding: 20px;
+   }
+   /* 解决既要获取高度又要不占据位置 */
+   .p_show{
+    visibility: visible;
+  }
+  .p_hide{
+    visibility: hidden;   
+    position: absolute;
+  }
+  </style>
+</head>
+<body>
+  <div id="collapse">
+    <div>
+      <h5 onclick="$use()">展开折叠效果<span ><i class="iconfont icon-arrow-up"></i>折叠</span></h5>
+      <p class="p_show">111111</p>
+    </div>
+    <div>
+      <h5 onclick="$use()">展开折叠效果<span ><i class="iconfont icon-arrow-down"></i>展开</span></h5>
+      <p class="p_hide">111111</p>
+    </div>
+    <div>
+      <h5 onclick="$use()">展开折叠效果<span ><i class="iconfont icon-arrow-down"></i>展开</span></h5>
+      <p class="p_hide">111111</p>
+    </div>
+    <div>
+      <h5 onclick="$use()">展开折叠效果<span ><i class="iconfont icon-arrow-down"></i>展开</span></h5>
+      <p class="p_hide">111111</p>
+    </div>
+    <div>
+      <h5 onclick="$use()">展开折叠效果<span ><i class="iconfont icon-arrow-down"></i>展开</span></h5>
+      <p class="p_hide">111111</p>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  var collapse = document.getElementById('collapse');
+  var col_div = collapse.getElementsByTagName('div');
+  var h_start
+  function $use(){
+    var parent = event.target
+    while(parent.nodeName != 'DIV'){
+      parent = parent.parentNode
+    }
+    var col_p = parent.getElementsByTagName('p')[0];
+    var col_s = parent.getElementsByTagName('span')[0];
+    var h = col_p.offsetHeight;
+    if(col_p.className == 'p_hide') {
+      col_p.className = 'p_show'
+      col_s.innerHTML = '<i class="iconfont icon-arrow-up"></i>折叠'
+    }else {
+      col_p.className = 'p_hide'
+      col_s.innerHTML = '<i class="iconfont icon-arrow-down"></i>展开'
+    }
+  }
+  /*//展开方法
+  function spread(h,col_p){
+      var hh = 0
+    function move() {
+      hh+=1
+      if(hh > h){
+        clearInterval(timeId)
+      } else {
+        col_p.style.height = hh+'px';
+      }
+    }
+      timeId = setInterval(move, 500)
+  }
+  //收缩方法
+  function draw(h,col_p){
+    function move() {
+      h-=1
+      if(h < 0){
+        clearInterval(timeId)
+      } else {
+        col_p.style.height = h+'px';
+      }
+    }
+      timeId = setInterval(move, 500)
+  }*/
+</script> -->

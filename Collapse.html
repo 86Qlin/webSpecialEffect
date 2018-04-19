@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="icon/iconfont.css">
+  <style>
+  * { 
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+  }
+  body { 
+    text-align:center; 
+    font:75% Verdana, Arial, Helvetica, sans-serif;
+  }
+  h1 { 
+    font:125% Arial, Helvetica, sans-serif; 
+    text-align:left; 
+    font-weight:bolder; 
+    background:#555;
+    line-height: 30px;  
+    padding:1px; 
+    display:block; 
+    color:#99CC00;
+    cursor: pointer;
+  }
+  .class1 { 
+    width:100%; 
+    background:#0f0; 
+    position:relative; 
+    margin:0 auto;
+    padding:1px;
+   }
+  .class1 span { 
+    position:absolute; 
+    right:10px; 
+    top:8px;
+    font-size: 14px; 
+    cursor:pointer; 
+    color:yellow;
+  }
+  .class1 span i{
+    padding-right: 5px;
+  }
+  .rotate{
+    transform:rotate(180deg);
+  }
+  .class1 p { 
+    text-align:left; 
+    line-height:20px; 
+    background:#555; 
+    padding:1px; 
+    margin-top:1px; 
+    color:#99CC00
+  }
+  #class1content { 
+    height:auto;
+    overflow:hidden
+  }
+  </style>
+</head>
+<body>
+  <div id="collapse">
+    <div class="class1">
+      <h1 onclick="$use()">展开/折叠效果</h1>
+      <span id="stateBut" onclick="$use()"><span class="rotate"><i class="iconfont icon-arrowDown"></i></span>收缩</span>
+      <p id="class1content">内容区
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+var collapse = document.getElementById('collapse');
+var d=collapse.getElementsByTagName('p')[0]
+var h = d.offsetHeight;
+function $(element) {
+  return element = document.getElementById(element);
+}
+function $D(h) {
+  var hh=d.offsetHeight;
+  function dmove(){
+    hh+=5; //层展开速度
+    if( hh>=h ) {
+      clearInterval(iIntervalId);
+    } else {
+      d.style.display='block';
+      d.style.height=h+'px';
+    }
+  }
+  iIntervalId=setInterval(dmove,2);
+}
+function $D2(h) {
+  function dmove(){
+    h-=50;//层收缩速度
+    if (h<=0) {
+      d.style.display='none';
+      clearInterval(iIntervalId);
+    }else {
+      d.style.height=h+'px';
+    }
+  }
+  iIntervalId=setInterval(dmove,2);
+}
+function $use() {
+  var sb=$('stateBut');
+  /*if(d.offsetHeight>0){
+    h = d.offsetHeight;
+  }*/
+  if(d.style.display=='none') {
+    $D(h);
+    sb.innerHTML='<b>收缩</b>';
+  }else {
+    $D2(h);
+    sb.innerHTML='<b>展开</b>';
+  }
+}
+</script>

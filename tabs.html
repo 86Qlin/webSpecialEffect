@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    #title{
+      width: 100%;
+      height: 42px;
+      background: #2b2b2b;
+      text-align: center;
+    }
+    #lichange{
+      width: 360px;
+      margin: 0 auto;
+    }
+    #lichange li{
+      width: 120px;
+      height: 42px;
+      line-height: 42px;
+      box-sizing: border-box;
+      cursor: pointer;
+      float: left;
+    }
+    .defaultli{
+      background:#ccc;
+    }
+    .activeli{
+      background: #87CEFA;
+      border-top: 2px solid #f15352;
+    }
+    #box{
+      
+    }
+    #box li{
+      display: none;
+      width:100%;
+      height: 40px;
+      background: #ccc;
+    }
+    #box .defaultbox{
+      display: none !important;
+    }
+    #box .activebox{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="tab">
+    <div id="title">
+      <ul id="lichange">
+        <li class="defaultli activeli">目标一</li>
+        <li class="defaultli">目标二</li>
+        <li class="defaultli">目标三</li>
+      </ul>
+    </div>  
+    <ul id="box">
+      <li class="activebox">目标一</li>
+      <li class="defaultbox">目标二</li>
+      <li class="defaultbox">目标三</li>
+    </ul>
+  </div>
+</body>
+</html>
+<script>
+  window.onload=function(){
+    var oTab=document.getElementById('lichange');
+    var aLi=oTab.getElementsByTagName('li');
+    var oTabBox=document.getElementById('box');
+    var aBox=oTabBox.getElementsByTagName('li');
+    for(var i=0;i<aLi.length;i++){
+      aLi[i].index=i;
+      aLi[i].onclick = function(event){
+        for(var j=0;j<aLi.length;j++){
+           var aClass=aLi[j].className.split(' ');//元素.className是一个字符串，切割成数组
+           var aClass1=aBox[j].className.split(' ');//
+            for(var z=0; z<aClass.length; z++){
+              if(aClass[z]=='activeli'){
+                aClass.splice(z,1);//利用数组的splice方法删除找到的这个类
+              }
+            }
+            for(var k=0; k<aClass1.length; k++){
+              if(aClass1[k]=='activebox'){
+                aClass1.splice(k,1);
+              }
+              if(aClass1[k]=='defaultbox'){
+                aClass1.splice(k,1);//利用数组的splice方法删除找到的这个类
+              }
+            }
+        aLi[j].className=aClass.join(' ');//所有的menu都去除active样式
+        aBox[j].className=aClass1.join(' ');
+        }
+        aLi[this.index].className+=' activeli';//当前menu添加active样式
+        aBox[this.index].className+=' activebox';
+      }
+    }
+  }
+
+</script>
